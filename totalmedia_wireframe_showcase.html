@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TotalMedia Aware — App Wireframe Showcase</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #ffffff;
+    --surface: #f4f5f7;
+    --surface2: #eaecf0;
+    --border: rgba(0,0,0,0.09);
+    --text: #111318;
+    --text-muted: #4b5563;
+    --text-dim: #9ca3af;
+    --accent: #1d4ed8;
+    --accent-light: #1d4ed8;
+    --tag-ai: rgba(139,92,246,0.12);
+    --tag-ai-text: #7c3aed;
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+    --font-mono: 'SF Mono', 'Fira Code', monospace;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    min-height: 100vh;
+    padding-bottom: 80px;
+  }
+
+  /* ── Header ── */
+  .site-header {
+    border-bottom: 0.5px solid var(--border);
+    padding: 24px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-mark {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .logo-name { font-size: 15px; font-weight: 500; color: var(--text); }
+  .logo-sub { font-size: 13px; color: var(--text-muted); margin-left: 4px; }
+  .header-meta { font-size: 12px; color: var(--text-muted); }
+  .header-meta span { color: var(--accent-light); }
+
+  /* ── Hero ── */
+  .hero {
+    padding: 56px 48px 40px;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .hero-eyebrow {
+    font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--accent-light); margin-bottom: 12px; font-weight: 500;
+  }
+  .hero-title {
+    font-size: 36px; font-weight: 600; line-height: 1.2;
+    color: var(--text); margin-bottom: 14px;
+  }
+  .hero-desc {
+    font-size: 15px; line-height: 1.7; color: var(--text-muted);
+    max-width: 680px;
+  }
+  .hero-stats {
+    display: flex; gap: 32px; margin-top: 32px;
+  }
+  .stat { }
+  .stat-num { font-size: 28px; font-weight: 600; color: var(--text); }
+  .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+  /* ── Nav pills ── */
+  .section-nav {
+    padding: 20px 48px;
+    display: flex; gap: 8px; flex-wrap: wrap;
+    border-bottom: 0.5px solid var(--border);
+    position: sticky; top: 65px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    z-index: 99;
+  }
+  .nav-pill {
+    font-size: 12px; padding: 5px 14px; border-radius: 20px;
+    border: 0.5px solid var(--border);
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+  .nav-pill:hover { border-color: var(--accent-light); color: var(--accent-light); }
+  .nav-pill.active { background: rgba(37,99,235,0.2); border-color: var(--accent); color: var(--accent-light); }
+
+  /* ── Section ── */
+  .section {
+    padding: 56px 48px 0;
+  }
+  .section-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    margin-bottom: 32px; gap: 24px;
+  }
+  .section-number {
+    font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-dim); font-weight: 500; margin-bottom: 8px;
+    font-family: var(--font-mono);
+  }
+  .section-title {
+    font-size: 22px; font-weight: 600; color: var(--text); margin-bottom: 8px;
+  }
+  .section-desc {
+    font-size: 14px; line-height: 1.7; color: var(--text-muted);
+    max-width: 600px;
+  }
+  .section-tag {
+    font-size: 11px; padding: 3px 10px; border-radius: 4px;
+    white-space: nowrap; margin-top: 4px; display: inline-block;
+  }
+  .tag-ai { background: var(--tag-ai); color: var(--tag-ai-text); }
+  .tag-core { background: rgba(37,99,235,0.15); color: var(--accent-light); }
+  .tag-security { background: rgba(74,222,128,0.1); color: #4ade80; }
+
+  /* ── Screen row ── */
+  .screen-row {
+    display: flex; gap: 32px; flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  /* ── Screen card ── */
+  .screen-card {
+    display: flex; flex-direction: column; gap: 0;
+  }
+  .phone-frame {
+    background: #1e2028;
+    border-radius: 20px;
+    padding: 16px;
+    border: 0.5px solid rgba(255,255,255,0.06);
+  }
+
+  /* ── Spec panel ── */
+  .spec-panel {
+    margin-top: 20px;
+    max-width: 320px;
+  }
+  .spec-label {
+    font-size: 11px; color: var(--text-dim); text-transform: uppercase;
+    letter-spacing: 0.8px; margin-bottom: 10px; font-family: var(--font-mono);
+  }
+  .spec-title {
+    font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 8px;
+  }
+  .spec-body {
+    font-size: 13px; line-height: 1.7; color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+  .spec-list {
+    list-style: none; display: flex; flex-direction: column; gap: 6px;
+  }
+  .spec-list li {
+    font-size: 12px; color: var(--text-muted);
+    display: flex; align-items: flex-start; gap: 8px; line-height: 1.5;
+  }
+  .spec-list li::before {
+    content: '';
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--accent-light);
+    flex-shrink: 0; margin-top: 6px;
+  }
+
+  /* ── Divider ── */
+  .section-divider {
+    margin: 56px 48px 0;
+    border: none;
+    border-top: 0.5px solid var(--border);
+  }
+
+  /* ── Footer ── */
+  .site-footer {
+    margin-top: 72px;
+    padding: 28px 48px;
+    border-top: 0.5px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-left { font-size: 13px; color: var(--text-muted); }
+  .footer-left strong { color: var(--text); }
+  .footer-right { font-size: 12px; color: var(--text-dim); font-family: var(--font-mono); }
+
+  /* ── Inline phone styles (reused across screens) ── */
+  .phone {
+    width: 320px; height: 640px; background: #1a1d21;
+    border-radius: 24px; overflow: hidden;
+    display: flex; flex-direction: column;
+    border: 0.5px solid rgba(255,255,255,0.1);
+    font-family: var(--font);
+  }
+  .status-bar {
+    padding: 8px 20px 0;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-shrink: 0;
+  }
+  .status-bar span { color: rgba(255,255,255,0.5); font-size: 11px; }
+  .battery { width: 14px; height: 10px; border: 1px solid rgba(255,255,255,0.5); border-radius: 2px; position: relative; }
+  .battery-fill { position: absolute; right: 1px; top: 1px; bottom: 1px; width: 8px; background: rgba(255,255,255,0.5); border-radius: 1px; }
+  .bottom-nav {
+    background: #12161b; padding: 8px 0 16px;
+    display: flex; justify-content: space-around; align-items: center;
+    border-top: 0.5px solid rgba(255,255,255,0.1);
+    flex-shrink: 0;
+  }
+  .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .nav-icon { padding: 4px 14px; }
+  .nav-icon.active { background: rgba(37,99,235,0.25); border-radius: 12px; }
+  .nav-lbl { font-size: 11px; color: rgba(255,255,255,0.45); }
+  .nav-lbl.active { color: #60a5fa; font-weight: 500; }
+  .alarm-dot { position: absolute; top: 2px; right: 10px; width: 8px; height: 8px; border-radius: 50%; background: #ef4444; border: 1.5px solid #12161b; }
+
+  /* toggle */
+  .toggle { width: 36px; height: 20px; border-radius: 10px; position: relative; flex-shrink: 0; }
+  .toggle.on { background: #2563eb; }
+  .toggle.off { background: rgba(255,255,255,0.15); }
+  .toggle-thumb { position: absolute; top: 2px; width: 16px; height: 16px; border-radius: 50%; background: white; }
+  .toggle.on .toggle-thumb { left: 18px; }
+  .toggle.off .toggle-thumb { left: 2px; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     HEADER
+══════════════════════════════════════════ -->
+<header class="site-header">
+  <div class="logo">
+    <div class="logo-mark">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+    </div>
+    <span class="logo-name">TotalMedia Aware</span>
+    <span class="logo-sub">— App Wireframes</span>
+  </div>
+  <div class="header-meta">9 key screens &nbsp;·&nbsp; <span>v0.1 draft</span> &nbsp;·&nbsp; Apr 2026</div>
+</header>
+
+<!-- ══════════════════════════════════════════
+     HERO
+══════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-eyebrow">Product Design · Mobile</div>
+  <h1 class="hero-title">TotalMedia Aware<br>Mobile App Wireframes</h1>
+  <p class="hero-desc">
+    End-to-end wireframe coverage for the TotalMedia Aware iOS/Android app. Screens are designed around two capability tiers: <strong style="color:#e8eaed;">Basic</strong> (motion-only alerts) and <strong style="color:#e8eaed;">Edge AI add-on</strong> (person, vehicle, intrusion, PPE detection). All screens follow the XProtect-inspired dark UI system with a four-tab bottom navigation.
+  </p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">9</div><div class="stat-label">Key screens</div></div>
+    <div class="stat"><div class="stat-num">5</div><div class="stat-label">Screen sections</div></div>
+    <div class="stat"><div class="stat-num">2</div><div class="stat-label">Capability tiers</div></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION NAV
+══════════════════════════════════════════ -->
+<nav class="section-nav">
+  <a class="nav-pill active" href="#views">Views & Cameras</a>
+  <a class="nav-pill" href="#alarms">Alarms</a>
+  <a class="nav-pill" href="#liveview">Live View & Playback</a>
+  <a class="nav-pill" href="#profile">Profile / Settings</a>
+  <a class="nav-pill" href="#notifications">Notification Prefs</a>
+  <a class="nav-pill" href="#password">Change Password</a>
+</nav>
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 1 — VIEWS & CAMERAS
+══════════════════════════════════════════ -->
+<section class="section" id="views">
+  <div class="section-header">
+    <div>
+      <div class="section-number">01 / Views &amp; Cameras</div>
+      <h2 class="section-title">Home — Site Grid & Camera List</h2>
+      <p class="section-desc">The app's primary landing screen. Two complementary views let operators quickly scan all sites and cameras without navigating deep into the hierarchy.</p>
+    </div>
+    <span class="section-tag tag-core">Core</span>
+  </div>
+
+  <div class="screen-row">
+
+    <!-- Views screen -->
+    <div class="screen-card">
+      <div class="phone-frame">
+        <div class="phone">
+          <div class="status-bar"><span>9:41</span><div class="battery"><div class="battery-fill"></div></div></div>
+          <div style="padding:12px 20px 8px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:32px;height:32px;border-radius:50%;background:#c17a28;display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+              <span style="color:white;font-size:20px;font-weight:500;">Views</span>
+            </div>
+            <div style="display:flex;gap:16px;align-items:center;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2"><polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+          </div>
+          <div style="flex:1;overflow-y:auto;padding:8px 16px;">
+            <!-- Site 1 -->
+            <div style="margin-bottom:16px;">
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:0.5px solid rgba(255,255,255,0.1);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.6)"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
+                <div><div style="color:white;font-size:15px;font-weight:500;">Main St Warehouse</div><div style="color:rgba(255,255,255,0.45);font-size:12px;">Trailer #T-0042 · 4 cameras</div></div>
+                <div style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:#4ade80;"></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:8px;border-radius:8px;overflow:hidden;">
+                <div style="aspect-ratio:16/10;background:linear-gradient(135deg,#2a3a2a,#1e2e1e);position:relative;"><span style="position:absolute;bottom:4px;left:6px;color:white;font-size:10px;text-shadow:0 1px 2px rgba(0,0,0,0.8);">Front gate</span><span style="position:absolute;top:4px;right:6px;width:6px;height:6px;border-radius:50%;background:#4ade80;display:block;"></span></div>
+                <div style="aspect-ratio:16/10;background:linear-gradient(135deg,#2a2a3a,#1e1e2e);position:relative;"><span style="position:absolute;bottom:4px;left:6px;color:white;font-size:10px;text-shadow:0 1px 2px rgba(0,0,0,0.8);">Loading dock</span><span style="position:absolute;top:4px;right:6px;width:6px;height:6px;border-radius:50%;background:#4ade80;display:block;"></span></div>
+                <div style="aspect-ratio:16/10;background:linear-gradient(135deg,#3a2a2a,#2e1e1e);position:relative;"><span style="position:absolute;bottom:4px;left:6px;color:white;font-size:10px;text-shadow:0 1px 2px rgba(0,0,0,0.8);">Rear fence</span><span style="position:absolute;top:4px;right:6px;width:6px;height:6px;border-radius:50%;background:#4ade80;display:block;"></span></div>
+                <div style="aspect-ratio:16/10;background:linear-gradient(135deg,#2a2a2a,#1e1e1e);position:relative;"><span style="position:absolute;bottom:4px;left:6px;color:white;font-size:10px;text-shadow:0 1px 2px rgba(0,0,0,0.8);">Parking lot</span><span style="position:absolute;top:4px;right:6px;width:6px;height:6px;border-radius:50%;background:#facc15;display:block;"></span></div>
+              </div>
+            </div>
+            <!-- Site 2 -->
+            <div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:0.5px solid rgba(255,255,255,0.1);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.6)"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
+                <div><div style="color:white;font-size:15px;font-weight:500;">5th Ave Construction</div><div style="color:rgba(255,255,255,0.45);font-size:12px;">Trailer #T-0087 · 4 cameras</div></div>
+                <div style="margin-left:auto;display:flex;align-items:center;gap:6px;"><span style="background:rgba(239,68,68,0.2);color:#f87171;font-size:10px;padding:2px 6px;border-radius:4px;">1 alert</span><div style="width:8px;height:8px;border-radius:50%;background:#4ade80;"></div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:8px;border-radius:8px;overflow:hidden;">
+                <div style="aspect-ratio:16/10;background:linear-gradient(135deg,#2a352a,#1e281e);position:relative;"><span style="position:absolute;top:4px;left:6px;background:rgba(239,68,68,0.85);color:white;font-size:9px;padding:1px 5px;border-radius:3px;">Person detected</span><span style="position:absolute;bottom:4px;left:6px;color:white;font-size:10px;text-shadow:0 1px 2px rgba(0,0,0,0.8);">Entrance</span><span style="position:absolute;top:4px;right:6px;width:6px;height:6px;border-radius:50%;background:#4ade80;display:block;margin-top:14px;"></span></div>
+                <div style="aspect-ratio:16/10;background:linear-gradient(135deg,#2a2d3a,#1e2028);position:relative;"><span style="position:absolute;bottom:4px;left:6px;color:white;font-size:10px;text-shadow:0 1px 2px rgba(0,0,0,0.8);">North perimeter</span><span style="position:absolute;top:4px;right:6px;width:6px;height:6px;border-radius:50%;background:#4ade80;display:block;"></span></div>
+                <div style="aspect-ratio:16/10;background:linear-gradient(135deg,#352a2a,#281e1e);position:relative;"><span style="position:absolute;bottom:4px;left:6px;color:white;font-size:10px;text-shadow:0 1px 2px rgba(0,0,0,0.8);">Equipment yard</span><span style="position:absolute;top:4px;right:6px;width:6px;height:6px;border-radius:50%;background:#ef4444;display:block;"></span></div>
+                <div style="aspect-ratio:16/10;background:linear-gradient(135deg,#2a2a30,#1e1e24);position:relative;"><span style="position:absolute;bottom:4px;left:6px;color:white;font-size:10px;text-shadow:0 1px 2px rgba(0,0,0,0.8);">South lot</span><span style="position:absolute;top:4px;right:6px;width:6px;height:6px;border-radius:50%;background:#4ade80;display:block;"></span></div>
+              </div>
+            </div>
+          </div>
+          <div class="bottom-nav">
+            <div class="nav-item"><div class="nav-icon active"><svg width="20" height="20" viewBox="0 0 24 24" fill="#60a5fa"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div><span class="nav-lbl active">Views</span></div>
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg></div><span class="nav-lbl">Cameras</span></div>
+            <div class="nav-item"><div class="nav-icon" style="position:relative;"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg><div class="alarm-dot"></div></div><span class="nav-lbl">Alarms</span></div>
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><circle cx="12" cy="6" r="2"/><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></div><span class="nav-lbl">More</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-panel">
+        <div class="spec-label">Screen 01</div>
+        <div class="spec-title">Views — grouped by site/trailer</div>
+        <div class="spec-body">Each deployment site is collapsed into a card showing its trailer ID, online status, and a 2×2 camera grid. Designed for field supervisors managing multiple concurrent sites.</div>
+        <ul class="spec-list">
+          <li>Sites grouped by trailer ID (e.g. #T-0042)</li>
+          <li>Per-site online status dot (green / amber / red)</li>
+          <li>Alert badge shown on site header when any camera has an active event</li>
+          <li>Edge AI detections show a red label overlay on the thumbnail (e.g. "Person detected")</li>
+          <li>Offline cameras indicated with a red dot on the thumbnail corner</li>
+          <li>Alarm bell icon in nav carries a red badge dot when unread alarms exist</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Cameras screen -->
+    <div class="screen-card">
+      <div class="phone-frame">
+        <div class="phone">
+          <div class="status-bar"><span>9:41</span><div class="battery"><div class="battery-fill"></div></div></div>
+          <div style="padding:12px 20px 8px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:32px;height:32px;border-radius:50%;background:#c17a28;display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+              <span style="color:white;font-size:20px;font-weight:500;">Cameras</span>
+            </div>
+            <div style="display:flex;gap:16px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2"><polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46"/></svg><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+          </div>
+          <div style="padding:4px 20px 8px;color:rgba(255,255,255,0.45);font-size:12px;flex-shrink:0;">8 cameras across 2 sites · 7 online</div>
+          <div style="flex:1;overflow-y:auto;padding:0 12px 12px;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+              <div style="aspect-ratio:16/10;background:linear-gradient(135deg,#2a3a2a,#1e2e1e);border-radius:4px;position:relative;"><span style="position:absolute;bottom:4px;left:6px;color:white;font-size:9px;text-shadow:0 1px 2px rgba(0,0,0,0.8);">Front gate</span><span style="position:absolute;bottom:4px;right:6px;color:rgba(255,255,255,0.5);font-size:8px;">Main St</span><span style="position:absolute;top:4px;right:6px;width:5px;height:5px;border-radius:50%;background:#4ade80;display:block;"></span></div>
+              <div style="aspect-ratio:16/10;background:linear-gradient(135deg,#2a2a3a,#1e1e2e);border-radius:4px;position:relative;"><span style="position:absolute;bottom:4px;left:6px;color:white;font-size:9px;text-shadow:0 1px 2px rgba(0,0,0,0.8);">Loading dock</span><span style="position:absolute;bottom:4px;right:6px;color:rgba(255,255,255,0.5);font-size:8px;">Main St</span><span style="position:absolute;top:4px;right:6px;width:5px;height:5px;border-radius:50%;background:#4ade80;display:block;"></span></div>
+              <div style="aspect-ratio:16/10;background:linear-gradient(135deg,#3a2a2a,#2e1e1e);border-radius:4px;position:relative;"><span style="position:absolute;bottom:4px;left:6px;color:white;font-size:9px;text-shadow:0 1px 2px rgba(0,0,0,0.8);">Rear fence</span><span style="position:absolute;bottom:4px;right:6px;color:rgba(255,255,255,0.5);font-size:8px;">Main St</span><span style="position:absolute;top:4px;right:6px;width:5px;height:5px;border-radius:50%;background:#4ade80;display:block;"></span></div>
+              <div style="aspect-ratio:16/10;background:linear-gradient(135deg,#2a2a2a,#1e1e1e);border-radius:4px;position:relative;"><span style="position:absolute;bottom:4px;left:6px;color:white;font-size:9px;text-shadow:0 1px 2px rgba(0,0,0,0.8);">Parking lot</span><span style="position:absolute;bottom:4px;right:6px;color:rgba(255,255,255,0.5);font-size:8px;">Main St</span><span style="position:absolute;top:4px;right:6px;width:5px;height:5px;border-radius:50%;background:#facc15;display:block;"></span></div>
+              <div style="aspect-ratio:16/10;background:linear-gradient(135deg,#2a352a,#1e281e);border-radius:4px;position:relative;"><span style="position:absolute;top:4px;left:6px;background:rgba(239,68,68,0.85);color:white;font-size:8px;padding:1px 4px;border-radius:2px;">Person</span><span style="position:absolute;bottom:4px;left:6px;color:white;font-size:9px;text-shadow:0 1px 2px rgba(0,0,0,0.8);">Entrance</span><span style="position:absolute;bottom:4px;right:6px;color:rgba(255,255,255,0.5);font-size:8px;">5th Ave</span><span style="position:absolute;top:4px;right:6px;width:5px;height:5px;border-radius:50%;background:#4ade80;display:block;margin-top:12px;"></span></div>
+              <div style="aspect-ratio:16/10;background:linear-gradient(135deg,#2a2d3a,#1e2028);border-radius:4px;position:relative;"><span style="position:absolute;bottom:4px;left:6px;color:white;font-size:9px;text-shadow:0 1px 2px rgba(0,0,0,0.8);">North perimeter</span><span style="position:absolute;bottom:4px;right:6px;color:rgba(255,255,255,0.5);font-size:8px;">5th Ave</span><span style="position:absolute;top:4px;right:6px;width:5px;height:5px;border-radius:50%;background:#4ade80;display:block;"></span></div>
+              <div style="aspect-ratio:16/10;background:linear-gradient(135deg,#352a2a,#281e1e);border-radius:4px;position:relative;"><span style="position:absolute;bottom:4px;left:6px;color:white;font-size:9px;text-shadow:0 1px 2px rgba(0,0,0,0.8);">Equipment yard</span><span style="position:absolute;bottom:4px;right:6px;color:rgba(255,255,255,0.5);font-size:8px;">5th Ave</span><span style="position:absolute;top:4px;right:6px;width:5px;height:5px;border-radius:50%;background:#ef4444;display:block;"></span></div>
+              <div style="aspect-ratio:16/10;background:linear-gradient(135deg,#2a2a30,#1e1e24);border-radius:4px;position:relative;"><span style="position:absolute;bottom:4px;left:6px;color:white;font-size:9px;text-shadow:0 1px 2px rgba(0,0,0,0.8);">South lot</span><span style="position:absolute;bottom:4px;right:6px;color:rgba(255,255,255,0.5);font-size:8px;">5th Ave</span><span style="position:absolute;top:4px;right:6px;width:5px;height:5px;border-radius:50%;background:#4ade80;display:block;"></span></div>
+            </div>
+          </div>
+          <div class="bottom-nav">
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div><span class="nav-lbl">Views</span></div>
+            <div class="nav-item"><div class="nav-icon active"><svg width="20" height="20" viewBox="0 0 24 24" fill="#60a5fa"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg></div><span class="nav-lbl active">Cameras</span></div>
+            <div class="nav-item"><div class="nav-icon" style="position:relative;"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg><div class="alarm-dot"></div></div><span class="nav-lbl">Alarms</span></div>
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><circle cx="12" cy="6" r="2"/><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></div><span class="nav-lbl">More</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-panel">
+        <div class="spec-label">Screen 02</div>
+        <div class="spec-title">Cameras — flat grid across all sites</div>
+        <div class="spec-body">A single scrollable 2×2 grid of every camera across all trailers. Useful for operators who want a bird's-eye status check regardless of site grouping.</div>
+        <ul class="spec-list">
+          <li>Site abbreviation label in each thumbnail (bottom-right) for cross-site context</li>
+          <li>Summary line at top: total camera count and online count</li>
+          <li>Status dot per thumbnail (green = online, amber = degraded, red = offline)</li>
+          <li>Edge AI event labels rendered directly on thumbnails</li>
+          <li>Tapping a thumbnail navigates to Live View for that camera</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="section-divider" id="alarms">
+
+<!-- ══════════════════════════════════════════
+     SECTION 2 — ALARMS
+══════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-number">02 / Alarms</div>
+      <h2 class="section-title">Alert Feed — Basic vs. Edge AI</h2>
+      <p class="section-desc">Two variants of the Alarms tab reflecting the add-on-aware design principle: the UI progressively reveals richer alert metadata and filter categories when Edge AI is active.</p>
+    </div>
+    <span class="section-tag tag-ai">Edge AI add-on</span>
+  </div>
+
+  <div class="screen-row">
+
+    <!-- Alarms basic -->
+    <div class="screen-card">
+      <div class="phone-frame">
+        <div class="phone" style="font-family:var(--font);">
+          <div class="status-bar"><span>9:41</span><div class="battery"><div class="battery-fill"></div></div></div>
+          <div style="padding:12px 20px 8px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;">
+            <div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:50%;background:#c17a28;display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div><span style="color:white;font-size:20px;font-weight:500;">Alarms</span></div>
+          </div>
+          <div style="padding:4px 16px 8px;display:flex;gap:8px;flex-shrink:0;">
+            <div style="background:rgba(37,99,235,0.25);color:#60a5fa;font-size:12px;padding:5px 12px;border-radius:16px;font-weight:500;">All</div>
+            <div style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);font-size:12px;padding:5px 12px;border-radius:16px;">Unread</div>
+            <div style="background:rgba(239,68,68,0.15);color:#f87171;font-size:12px;padding:5px 12px;border-radius:16px;">Critical</div>
+          </div>
+          <div style="flex:1;overflow-y:auto;">
+            <div style="padding:8px 20px 4px;color:rgba(255,255,255,0.35);font-size:11px;text-transform:uppercase;letter-spacing:0.5px;">Today</div>
+            <div style="display:flex;gap:12px;padding:12px 16px;background:rgba(239,68,68,0.06);border-left:3px solid #ef4444;">
+              <div style="width:72px;height:48px;border-radius:6px;background:linear-gradient(135deg,#2a352a,#1e281e);flex-shrink:0;position:relative;overflow:hidden;"><div style="position:absolute;bottom:2px;left:4px;color:white;font-size:8px;">Entrance</div></div>
+              <div style="flex:1;"><div style="display:flex;justify-content:space-between;"><div style="font-size:13px;color:white;font-weight:500;">Motion detected</div><div style="color:rgba(255,255,255,0.35);font-size:11px;">2 min ago</div></div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;">Entrance · 5th Ave</div><div style="display:flex;gap:6px;margin-top:6px;align-items:center;"><div style="background:rgba(239,68,68,0.2);color:#f87171;font-size:10px;padding:2px 6px;border-radius:4px;">Critical</div><div style="width:6px;height:6px;border-radius:50%;background:#60a5fa;"></div></div></div>
+            </div>
+            <div style="display:flex;gap:12px;padding:12px 16px;border-bottom:0.5px solid rgba(255,255,255,0.06);">
+              <div style="width:72px;height:48px;border-radius:6px;background:linear-gradient(135deg,#2a2a2a,#1e1e1e);flex-shrink:0;position:relative;"><div style="position:absolute;bottom:2px;left:4px;color:white;font-size:8px;">Parking lot</div></div>
+              <div style="flex:1;"><div style="display:flex;justify-content:space-between;"><div style="font-size:13px;color:white;font-weight:500;">Motion detected</div><div style="color:rgba(255,255,255,0.35);font-size:11px;">18 min ago</div></div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;">Parking lot · Main St</div><div style="display:flex;gap:6px;margin-top:6px;align-items:center;"><div style="background:rgba(250,204,21,0.15);color:#facc15;font-size:10px;padding:2px 6px;border-radius:4px;">Warning</div><div style="width:6px;height:6px;border-radius:50%;background:#60a5fa;"></div></div></div>
+            </div>
+            <div style="display:flex;gap:12px;padding:12px 16px;border-bottom:0.5px solid rgba(255,255,255,0.06);">
+              <div style="width:72px;height:48px;border-radius:6px;background:linear-gradient(135deg,#352a2a,#281e1e);flex-shrink:0;position:relative;"><div style="position:absolute;bottom:2px;left:4px;color:white;font-size:8px;">Equipment yard</div></div>
+              <div style="flex:1;"><div style="display:flex;justify-content:space-between;"><div style="font-size:13px;color:rgba(255,255,255,0.6);">Camera offline</div><div style="color:rgba(255,255,255,0.35);font-size:11px;">1 hr ago</div></div><div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:2px;">Equipment yard · 5th Ave</div><div style="display:flex;gap:6px;margin-top:6px;"><div style="background:rgba(239,68,68,0.15);color:#f87171;font-size:10px;padding:2px 6px;border-radius:4px;">System</div></div></div>
+            </div>
+            <div style="padding:12px 20px 4px;color:rgba(255,255,255,0.35);font-size:11px;text-transform:uppercase;letter-spacing:0.5px;">Yesterday</div>
+            <div style="display:flex;gap:12px;padding:12px 16px;border-bottom:0.5px solid rgba(255,255,255,0.06);">
+              <div style="width:72px;height:48px;border-radius:6px;background:linear-gradient(135deg,#2a3a2a,#1e2e1e);flex-shrink:0;position:relative;"><div style="position:absolute;bottom:2px;left:4px;color:white;font-size:8px;">Front gate</div></div>
+              <div style="flex:1;"><div style="display:flex;justify-content:space-between;"><div style="font-size:13px;color:rgba(255,255,255,0.6);">Motion detected</div><div style="color:rgba(255,255,255,0.35);font-size:11px;">8:42 PM</div></div><div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:2px;">Front gate · Main St</div></div>
+            </div>
+          </div>
+          <div class="bottom-nav">
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div><span class="nav-lbl">Views</span></div>
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg></div><span class="nav-lbl">Cameras</span></div>
+            <div class="nav-item"><div class="nav-icon active"><svg width="20" height="20" viewBox="0 0 24 24" fill="#60a5fa"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div><span class="nav-lbl active">Alarms</span></div>
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><circle cx="12" cy="6" r="2"/><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></div><span class="nav-lbl">More</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-panel">
+        <div class="spec-label">Screen 03</div>
+        <div class="spec-title">Alarms — basic motion (no Edge AI)</div>
+        <div class="spec-body">Default alarm feed for operators without the Edge AI add-on. All alerts are labelled generically as "Motion detected" or system events.</div>
+        <ul class="spec-list">
+          <li>Filter tabs: All / Unread / Critical</li>
+          <li>Unread alerts show a blue dot indicator</li>
+          <li>Critical alerts have a red left border and tinted background</li>
+          <li>System alerts (e.g. Camera offline) share the same list</li>
+          <li>Alerts grouped by date: Today / Yesterday</li>
+          <li>Camera thumbnail with location label per row</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Alarms Edge AI -->
+    <div class="screen-card">
+      <div class="phone-frame">
+        <div class="phone">
+          <div class="status-bar"><span>9:41</span><div class="battery"><div class="battery-fill"></div></div></div>
+          <div style="padding:12px 20px 8px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;">
+            <div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:50%;background:#c17a28;display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div><span style="color:white;font-size:20px;font-weight:500;">Alarms</span></div>
+          </div>
+          <div style="padding:4px 16px 8px;display:flex;gap:6px;overflow-x:auto;flex-shrink:0;">
+            <div style="background:rgba(37,99,235,0.25);color:#60a5fa;font-size:12px;padding:5px 12px;border-radius:16px;font-weight:500;white-space:nowrap;">All</div>
+            <div style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);font-size:12px;padding:5px 10px;border-radius:16px;white-space:nowrap;">Person</div>
+            <div style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);font-size:12px;padding:5px 10px;border-radius:16px;white-space:nowrap;">Vehicle</div>
+            <div style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);font-size:12px;padding:5px 10px;border-radius:16px;white-space:nowrap;">Safety</div>
+            <div style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);font-size:12px;padding:5px 10px;border-radius:16px;white-space:nowrap;">System</div>
+          </div>
+          <div style="flex:1;overflow-y:auto;">
+            <div style="padding:8px 20px 4px;color:rgba(255,255,255,0.35);font-size:11px;text-transform:uppercase;letter-spacing:0.5px;">Today</div>
+            <div style="display:flex;gap:12px;padding:12px 16px;background:rgba(239,68,68,0.06);border-left:3px solid #ef4444;">
+              <div style="width:72px;height:48px;border-radius:6px;background:linear-gradient(135deg,#2a352a,#1e281e);flex-shrink:0;position:relative;overflow:hidden;"><div style="position:absolute;top:6px;left:18px;width:20px;height:32px;border:1.5px solid #ef4444;border-radius:2px;"></div><div style="position:absolute;bottom:2px;left:4px;color:white;font-size:8px;">Entrance</div></div>
+              <div style="flex:1;"><div style="display:flex;justify-content:space-between;"><div style="font-size:13px;color:white;font-weight:500;">Person detected</div><div style="color:rgba(255,255,255,0.35);font-size:11px;">2 min ago</div></div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;">Entrance · 5th Ave</div><div style="display:flex;gap:6px;margin-top:6px;align-items:center;"><div style="background:rgba(239,68,68,0.2);color:#f87171;font-size:10px;padding:2px 6px;border-radius:4px;">Critical</div><div style="background:rgba(168,85,247,0.2);color:#c084fc;font-size:10px;padding:2px 6px;border-radius:4px;">Edge AI</div><div style="width:6px;height:6px;border-radius:50%;background:#60a5fa;"></div></div></div>
+            </div>
+            <div style="display:flex;gap:12px;padding:12px 16px;border-bottom:0.5px solid rgba(255,255,255,0.06);background:rgba(239,68,68,0.03);border-left:3px solid #ef4444;">
+              <div style="width:72px;height:48px;border-radius:6px;background:linear-gradient(135deg,#2a2d3a,#1e2028);flex-shrink:0;position:relative;overflow:hidden;"><div style="position:absolute;top:4px;left:4px;right:4px;height:0;border-top:1.5px dashed #ef4444;"></div><div style="position:absolute;bottom:2px;left:4px;color:white;font-size:8px;">North perimeter</div></div>
+              <div style="flex:1;"><div style="display:flex;justify-content:space-between;"><div style="font-size:13px;color:white;font-weight:500;">Intrusion detected</div><div style="color:rgba(255,255,255,0.35);font-size:11px;">8 min ago</div></div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;">North perimeter · 5th Ave</div><div style="display:flex;gap:6px;margin-top:6px;align-items:center;"><div style="background:rgba(239,68,68,0.2);color:#f87171;font-size:10px;padding:2px 6px;border-radius:4px;">Critical</div><div style="background:rgba(168,85,247,0.2);color:#c084fc;font-size:10px;padding:2px 6px;border-radius:4px;">Edge AI</div><div style="width:6px;height:6px;border-radius:50%;background:#60a5fa;"></div></div></div>
+            </div>
+            <div style="display:flex;gap:12px;padding:12px 16px;border-bottom:0.5px solid rgba(255,255,255,0.06);">
+              <div style="width:72px;height:48px;border-radius:6px;background:linear-gradient(135deg,#2a3a2a,#1e2e1e);flex-shrink:0;position:relative;overflow:hidden;"><div style="position:absolute;top:10px;left:24px;width:30px;height:18px;border:1.5px solid #facc15;border-radius:2px;"></div><div style="position:absolute;bottom:2px;left:4px;color:white;font-size:8px;">Front gate</div></div>
+              <div style="flex:1;"><div style="display:flex;justify-content:space-between;"><div style="font-size:13px;color:white;font-weight:500;">Vehicle detected</div><div style="color:rgba(255,255,255,0.35);font-size:11px;">22 min ago</div></div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;">Front gate · Main St</div><div style="display:flex;gap:6px;margin-top:6px;align-items:center;"><div style="background:rgba(250,204,21,0.15);color:#facc15;font-size:10px;padding:2px 6px;border-radius:4px;">Warning</div><div style="background:rgba(168,85,247,0.2);color:#c084fc;font-size:10px;padding:2px 6px;border-radius:4px;">Edge AI</div></div></div>
+            </div>
+            <div style="display:flex;gap:12px;padding:12px 16px;border-bottom:0.5px solid rgba(255,255,255,0.06);">
+              <div style="width:72px;height:48px;border-radius:6px;background:linear-gradient(135deg,#352a2a,#281e1e);flex-shrink:0;position:relative;"><div style="position:absolute;bottom:2px;left:4px;color:white;font-size:8px;">Equipment yard</div></div>
+              <div style="flex:1;"><div style="display:flex;justify-content:space-between;"><div style="font-size:13px;color:rgba(255,255,255,0.6);">PPE violation</div><div style="color:rgba(255,255,255,0.35);font-size:11px;">1 hr ago</div></div><div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:2px;">Equipment yard · 5th Ave</div><div style="display:flex;gap:6px;margin-top:6px;"><div style="background:rgba(251,146,60,0.15);color:#fb923c;font-size:10px;padding:2px 6px;border-radius:4px;">Safety</div><div style="background:rgba(168,85,247,0.2);color:#c084fc;font-size:10px;padding:2px 6px;border-radius:4px;">Edge AI</div></div></div>
+            </div>
+          </div>
+          <div class="bottom-nav">
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div><span class="nav-lbl">Views</span></div>
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg></div><span class="nav-lbl">Cameras</span></div>
+            <div class="nav-item"><div class="nav-icon active"><svg width="20" height="20" viewBox="0 0 24 24" fill="#60a5fa"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div><span class="nav-lbl active">Alarms</span></div>
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><circle cx="12" cy="6" r="2"/><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></div><span class="nav-lbl">More</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-panel">
+        <div class="spec-label">Screen 04</div>
+        <div class="spec-title">Alarms — with Edge AI detection</div>
+        <div class="spec-body">Upgraded alarm feed unlocked by the Edge AI add-on. Specific detection types replace generic motion labels, and the filter bar expands with AI-specific categories.</div>
+        <ul class="spec-list">
+          <li>Filter tabs expand to: All / Person / Vehicle / Safety / System</li>
+          <li>Alert titles: "Person detected", "Intrusion detected", "Vehicle detected", "PPE violation"</li>
+          <li>Purple "Edge AI" badge on every AI-triggered alert row</li>
+          <li>Bounding boxes rendered on thumbnails (red for person/intrusion, yellow for vehicle)</li>
+          <li>Dashed red line overlay indicates a virtual line-crossing zone</li>
+          <li>System alerts (Camera offline) carry no Edge AI badge — consistent labelling</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="section-divider" id="liveview">
+
+<!-- ══════════════════════════════════════════
+     SECTION 3 — LIVE VIEW & PLAYBACK
+══════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-number">03 / Live View &amp; Playback</div>
+      <h2 class="section-title">Camera Detail — Live &amp; Historical Footage</h2>
+      <p class="section-desc">Full-screen camera viewer with seamless switching between live stream and recorded playback. Inspired by XProtect's dual-pane pattern.</p>
+    </div>
+    <span class="section-tag tag-core">Core</span>
+  </div>
+
+  <div class="screen-row">
+
+    <!-- Live View screen (simplified inline render) -->
+    <div class="screen-card">
+      <div class="phone-frame">
+        <div class="phone">
+          <div class="status-bar"><span>9:41</span><div class="battery"><div class="battery-fill"></div></div></div>
+          <div style="padding:10px 16px 6px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            <div style="display:flex;gap:18px;align-items:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="3"/></svg><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></div>
+          </div>
+          <div style="display:flex;justify-content:center;padding:4px 16px 10px;flex-shrink:0;"><div style="background:rgba(255,255,255,0.1);border-radius:16px;padding:6px 16px;display:flex;align-items:center;gap:8px;"><span style="color:rgba(255,255,255,0.85);font-size:13px;">Front gate · Main St Warehouse</span><div style="width:8px;height:8px;border-radius:50%;background:#4ade80;"></div></div></div>
+          <div style="display:flex;justify-content:center;padding:8px 0 4px;flex-shrink:0;"><div style="display:flex;align-items:center;gap:6px;"><div style="width:8px;height:8px;border-radius:50%;background:#ef4444;"></div><span style="color:rgba(255,255,255,0.6);font-size:13px;font-weight:500;letter-spacing:1px;">LIVE</span></div></div>
+          <div style="position:relative;background:#000;flex-shrink:0;">
+            <div style="width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;background:linear-gradient(160deg,#0a1510,#080c0a 30%,#0c0e0c 50%,#1a1e18 70%,#2a3020);">
+              <div style="position:absolute;top:8px;left:10px;color:rgba(255,255,255,0.8);font-size:11px;font-family:monospace;">24/04/2026  09:41:23</div>
+            </div>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
+            <div style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.25);font-size:12px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg><span>Swipe to switch cameras</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+            <div style="display:flex;gap:8px;"><div style="width:8px;height:8px;border-radius:50%;background:#60a5fa;"></div><div style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.25);margin-top:1px;"></div><div style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.25);margin-top:1px;"></div><div style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.25);margin-top:1px;"></div></div>
+          </div>
+          <div style="padding:12px 24px 28px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;">
+            <div style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);padding:8px 14px;border-radius:8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M8 5v14l11-7z"/></svg><span style="color:rgba(255,255,255,0.7);font-size:12px;">Playback</span></div>
+            <div style="display:flex;align-items:center;gap:4px;color:rgba(255,255,255,0.4);font-size:11px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>Zoom</div>
+          </div>
+          <div class="bottom-nav">
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div><span class="nav-lbl">Views</span></div>
+            <div class="nav-item"><div class="nav-icon active"><svg width="20" height="20" viewBox="0 0 24 24" fill="#60a5fa"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg></div><span class="nav-lbl active">Cameras</span></div>
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div><span class="nav-lbl">Alarms</span></div>
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><circle cx="12" cy="6" r="2"/><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></div><span class="nav-lbl">More</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-panel">
+        <div class="spec-label">Screen 05</div>
+        <div class="spec-title">Live view — single camera</div>
+        <div class="spec-body">Full-screen live stream for a selected camera. Designed for quick eyes-on checks in the field with minimal UI chrome.</div>
+        <ul class="spec-list">
+          <li>Camera name + site label displayed in a pill chip below the top bar</li>
+          <li>Red dot + "LIVE" label confirms active stream state</li>
+          <li>Timestamp overlay (top-left) burns into the video frame</li>
+          <li>Swipe left/right to cycle through cameras on the same trailer</li>
+          <li>Dot pagination indicates current camera position in the trailer sequence</li>
+          <li>One-tap "Playback" button switches to historical footage</li>
+          <li>Zoom / digital PTZ control in bottom-right</li>
+          <li>Snapshot and bookmark actions in the top toolbar</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Playback screen (simplified) -->
+    <div class="screen-card">
+      <div class="phone-frame">
+        <div class="phone">
+          <div class="status-bar"><span>9:41</span><div class="battery"><div class="battery-fill"></div></div></div>
+          <div style="padding:10px 16px 6px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            <div style="display:flex;gap:14px;align-items:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><rect x="12" y="9" width="8" height="6" rx="1" fill="rgba(255,255,255,0.15)"/></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></div>
+          </div>
+          <div style="display:flex;justify-content:center;padding:4px 16px 6px;flex-shrink:0;"><div style="background:rgba(255,255,255,0.1);border-radius:16px;padding:6px 16px;display:flex;align-items:center;gap:8px;"><span style="color:rgba(255,255,255,0.85);font-size:13px;">Front gate · Main St Warehouse</span></div></div>
+          <!-- Live PiP -->
+          <div style="padding:0 12px;flex-shrink:0;">
+            <div style="width:120px;height:72px;border-radius:6px;overflow:hidden;border:2px solid #60a5fa;position:relative;">
+              <div style="position:absolute;inset:0;background:linear-gradient(160deg,#0a1510,#080c0a 30%,#1a1e18 70%,#2a3020);"></div>
+              <div style="position:absolute;top:3px;left:5px;color:white;font-size:9px;font-weight:500;">Live</div>
+              <div style="position:absolute;top:5px;right:5px;width:6px;height:6px;border-radius:50%;background:#ef4444;"></div>
+            </div>
+          </div>
+          <!-- Playback video -->
+          <div style="margin:6px 0 0;background:#000;flex-shrink:0;">
+            <div style="width:100%;aspect-ratio:16/9;background:linear-gradient(160deg,#0a1510,#080c0a 30%,#0c0e0c 50%,#1a1e18 70%,#2a3020);position:relative;overflow:hidden;">
+              <div style="position:absolute;top:8px;left:10px;color:rgba(255,255,255,0.8);font-size:11px;font-family:monospace;">23/04/2026  21:02:12</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:center;padding:8px 0 2px;flex-shrink:0;"><span style="color:rgba(255,255,255,0.4);font-size:13px;font-weight:500;">PLAYBACK</span></div>
+          <div style="padding:4px 24px 6px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;">
+            <div style="background:rgba(255,255,255,0.1);padding:4px 12px;border-radius:6px;"><span style="color:rgba(255,255,255,0.7);font-size:13px;font-weight:500;">x1</span></div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+          </div>
+          <!-- Controls -->
+          <div style="padding:0 16px 6px;display:flex;justify-content:center;align-items:center;gap:20px;flex-shrink:0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="rgba(255,255,255,0.6)"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg>
+            <div style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(255,255,255,0.25);"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="rgba(255,255,255,0.6)"><path d="M13 6v12l8.5-6L13 6zM4 18l8.5-6L4 6v12z"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><path d="M16 18h2V6h-2zM6 18l8.5-6L6 6z"/></svg>
+          </div>
+          <!-- Timeline -->
+          <div style="padding:0 8px 6px;flex-shrink:0;">
+            <div style="display:flex;justify-content:center;margin-bottom:4px;"><div style="background:rgba(37,99,235,0.9);padding:3px 10px;border-radius:4px;"><span style="color:white;font-size:11px;font-weight:500;">9:02:12 PM</span></div></div>
+            <div style="display:flex;justify-content:space-between;padding:0 4px;margin-bottom:4px;"><span style="color:rgba(255,255,255,0.3);font-size:10px;">8:30 PM</span><span style="color:rgba(255,255,255,0.3);font-size:10px;">9:00 PM</span><span style="color:rgba(255,255,255,0.3);font-size:10px;">9:30 PM</span></div>
+            <div style="position:relative;height:24px;margin:0 4px;">
+              <div style="position:absolute;top:4px;left:0;right:0;height:8px;background:rgba(255,255,255,0.06);border-radius:2px;"><div style="position:absolute;left:5%;right:2%;height:100%;background:rgba(74,222,128,0.25);border-radius:2px;"></div></div>
+              <div style="position:absolute;top:2px;left:25%;width:2px;height:12px;background:#facc15;border-radius:1px;"></div>
+              <div style="position:absolute;top:2px;left:55%;width:2px;height:12px;background:#ef4444;border-radius:1px;"></div>
+              <div style="position:absolute;top:0;left:60%;width:2px;height:18px;background:#2563eb;border-radius:1px;"><div style="position:absolute;top:-3px;left:-4px;width:10px;height:10px;border-radius:50%;background:#2563eb;border:2px solid white;"></div></div>
+            </div>
+          </div>
+          <div class="bottom-nav">
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div><span class="nav-lbl">Views</span></div>
+            <div class="nav-item"><div class="nav-icon active"><svg width="20" height="20" viewBox="0 0 24 24" fill="#60a5fa"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg></div><span class="nav-lbl active">Cameras</span></div>
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div><span class="nav-lbl">Alarms</span></div>
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><circle cx="12" cy="6" r="2"/><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></div><span class="nav-lbl">More</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-panel">
+        <div class="spec-label">Screen 06</div>
+        <div class="spec-title">Playback — with live PiP + timeline</div>
+        <div class="spec-body">Historical footage playback with a persistent live picture-in-picture thumbnail (blue border) so the operator never loses sight of the real-time feed. Mirrors the XProtect dual-pane pattern.</div>
+        <ul class="spec-list">
+          <li>Live PiP thumbnail (blue border, top-left) persists during playback</li>
+          <li>PLAYBACK label replaces LIVE indicator in the main player</li>
+          <li>Historical timestamp overlay on the playback frame</li>
+          <li>Playback speed selector (x1, x2, x4, etc.)</li>
+          <li>Full control bar: skip to start / step back / play-pause / step forward / skip to end</li>
+          <li>Timeline bar: green = recorded footage available, yellow/red markers = detected events</li>
+          <li>Blue draggable playhead with current time callout above</li>
+          <li>Export and snapshot actions in the top toolbar</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="section-divider" id="profile">
+
+<!-- ══════════════════════════════════════════
+     SECTION 4 — PROFILE / SETTINGS
+══════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-number">04 / Profile &amp; Settings</div>
+      <h2 class="section-title">Profile — Account &amp; Security</h2>
+      <p class="section-desc">User account settings scoped strictly to app-level preferences. No system or device settings are exposed — all account management routes through the TotalMedia operator portal.</p>
+    </div>
+    <span class="section-tag tag-security">Security</span>
+  </div>
+
+  <div class="screen-row">
+
+    <!-- Profile main -->
+    <div class="screen-card">
+      <div class="phone-frame">
+        <div class="phone">
+          <div class="status-bar"><span>9:41</span><div class="battery"><div class="battery-fill"></div></div></div>
+          <div style="padding:12px 20px 8px;display:flex;align-items:center;gap:10px;flex-shrink:0;"><div style="width:32px;height:32px;border-radius:50%;background:#c17a28;display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div><span style="color:white;font-size:20px;font-weight:500;">Profile</span></div>
+          <div style="flex:1;overflow-y:auto;">
+            <div style="padding:16px 20px 20px;display:flex;flex-direction:column;align-items:center;gap:10px;border-bottom:0.5px solid rgba(255,255,255,0.08);">
+              <div style="width:64px;height:64px;border-radius:50%;background:#c17a28;display:flex;align-items:center;justify-content:center;"><svg width="32" height="32" viewBox="0 0 24 24" fill="white"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+              <div style="text-align:center;"><div style="color:white;font-size:17px;font-weight:500;">James Okafor</div><div style="color:rgba(255,255,255,0.45);font-size:13px;">Site Supervisor · TM Operator</div></div>
+            </div>
+            <div style="padding:16px 20px 6px;color:rgba(255,255,255,0.3);font-size:11px;text-transform:uppercase;letter-spacing:0.7px;">Notifications</div>
+            <div style="margin:0 12px;background:rgba(255,255,255,0.04);border-radius:12px;overflow:hidden;">
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:0.5px solid rgba(255,255,255,0.06);">
+                <div style="width:28px;height:28px;border-radius:7px;background:rgba(37,99,235,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#60a5fa"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div>
+                <div style="flex:1;"><div style="color:rgba(255,255,255,0.88);font-size:14px;">Push notifications</div><div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:1px;">Motion, person, vehicle alerts</div></div>
+                <div class="toggle on"><div class="toggle-thumb"></div></div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;">
+                <div style="width:28px;height:28px;border-radius:7px;background:rgba(250,204,21,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#facc15"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg></div>
+                <div style="flex:1;"><div style="color:rgba(255,255,255,0.88);font-size:14px;">Notification preferences</div><div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:1px;">Schedule, severity, alert types</div></div>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+              </div>
+            </div>
+            <div style="padding:14px 20px 6px;color:rgba(255,255,255,0.3);font-size:11px;text-transform:uppercase;letter-spacing:0.7px;">Security</div>
+            <div style="margin:0 12px;background:rgba(255,255,255,0.04);border-radius:12px;overflow:hidden;">
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:0.5px solid rgba(255,255,255,0.06);">
+                <div style="width:28px;height:28px;border-radius:7px;background:rgba(37,99,235,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#60a5fa"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg></div>
+                <div style="flex:1;"><div style="color:rgba(255,255,255,0.88);font-size:14px;">Face ID / Biometrics</div><div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:1px;">Require on app open</div></div>
+                <div class="toggle on"><div class="toggle-thumb"></div></div>
+              </div>
+              <!-- Password row highlighted -->
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:0.5px solid rgba(255,255,255,0.06);background:rgba(37,99,235,0.07);border-left:2.5px solid #2563eb;">
+                <div style="width:28px;height:28px;border-radius:7px;background:rgba(37,99,235,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#60a5fa"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg></div>
+                <div style="flex:1;"><div style="color:rgba(255,255,255,0.88);font-size:14px;">Password</div><div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:1px;">Last changed 30 days ago</div></div>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(96,165,250,0.6)" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;">
+                <div style="width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="rgba(255,255,255,0.55)"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></div>
+                <div style="flex:1;"><div style="color:rgba(255,255,255,0.88);font-size:14px;">Session timeout</div><div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:1px;">Auto-lock after 15 min</div></div>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+              </div>
+            </div>
+            <div style="padding:14px 20px 6px;color:rgba(255,255,255,0.3);font-size:11px;text-transform:uppercase;letter-spacing:0.7px;">Support</div>
+            <div style="margin:0 12px;background:rgba(255,255,255,0.04);border-radius:12px;overflow:hidden;">
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;">
+                <div style="width:28px;height:28px;border-radius:7px;background:rgba(37,99,235,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#60a5fa"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg></div>
+                <div style="flex:1;"><div style="color:rgba(255,255,255,0.88);font-size:14px;">Contact support</div><div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:1px;">TotalMedia operator helpdesk</div></div>
+                <span style="color:#60a5fa;font-size:11px;">Open ↗</span>
+              </div>
+            </div>
+            <div style="margin:12px 12px 0;background:rgba(255,255,255,0.04);border-radius:12px;overflow:hidden;">
+              <div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 14px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="#f87171"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg><span style="color:#f87171;font-size:14px;">Sign out</span></div>
+            </div>
+            <div style="padding:14px 20px 8px;text-align:center;color:rgba(255,255,255,0.2);font-size:12px;">TotalMedia Aware v2.4.1 · Build 2026.04</div>
+          </div>
+          <div class="bottom-nav">
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div><span class="nav-lbl">Views</span></div>
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg></div><span class="nav-lbl">Cameras</span></div>
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div><span class="nav-lbl">Alarms</span></div>
+            <div class="nav-item"><div class="nav-icon active"><svg width="20" height="20" viewBox="0 0 24 24" fill="#60a5fa"><circle cx="12" cy="6" r="2"/><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></div><span class="nav-lbl active">More</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-panel">
+        <div class="spec-label">Screen 07</div>
+        <div class="spec-title">Profile / Settings — main</div>
+        <div class="spec-body">Top-level settings page accessed from the "More" tab. Scoped strictly to app-level behaviour — no device settings exposed.</div>
+        <ul class="spec-list">
+          <li>User identity card: avatar, full name, role and operator affiliation</li>
+          <li>Notifications section: push toggle + shortcut to full notification preferences</li>
+          <li>Security section: Face ID toggle, Password entry (highlighted), Session timeout</li>
+          <li>Password row shows "Last changed N days ago" for security awareness</li>
+          <li>Support section: direct link to TotalMedia operator helpdesk (opens external URL)</li>
+          <li>Sign out in red at the bottom; app version string below</li>
+          <li>Active nav tab: More (dot-grid icon)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Notification Prefs screen (simplified) -->
+    <div class="screen-card" id="notifications">
+      <div class="phone-frame">
+        <div class="phone">
+          <div class="status-bar"><span>9:41</span><div class="battery"><div class="battery-fill"></div></div></div>
+          <div style="padding:10px 16px 6px;display:flex;align-items:center;gap:10px;flex-shrink:0;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span style="color:white;font-size:17px;font-weight:500;">Notification preferences</span></div>
+          <div style="flex:1;overflow-y:auto;">
+            <div style="padding:16px 20px 6px;color:rgba(255,255,255,0.3);font-size:11px;text-transform:uppercase;letter-spacing:0.7px;">Alert types</div>
+            <div style="margin:0 12px;background:rgba(255,255,255,0.04);border-radius:12px;overflow:hidden;">
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:0.5px solid rgba(255,255,255,0.06);">
+                <div style="width:28px;height:28px;border-radius:7px;background:rgba(239,68,68,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#f87171"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+                <div style="flex:1;"><div style="color:rgba(255,255,255,0.88);font-size:14px;">Person detected</div><div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:1px;">Edge AI · requires add-on</div></div>
+                <div class="toggle on"><div class="toggle-thumb"></div></div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:0.5px solid rgba(255,255,255,0.06);">
+                <div style="width:28px;height:28px;border-radius:7px;background:rgba(250,204,21,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#facc15"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.85 7h10.29l1.08 3.11H5.77L6.85 7zM19 17H5v-5h14v5z"/></svg></div>
+                <div style="flex:1;"><div style="color:rgba(255,255,255,0.88);font-size:14px;">Vehicle detected</div><div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:1px;">Edge AI · requires add-on</div></div>
+                <div class="toggle on"><div class="toggle-thumb"></div></div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:0.5px solid rgba(255,255,255,0.06);">
+                <div style="width:28px;height:28px;border-radius:7px;background:rgba(139,92,246,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#c084fc"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></div>
+                <div style="flex:1;"><div style="color:rgba(255,255,255,0.88);font-size:14px;">Intrusion / line crossing</div><div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:1px;">Edge AI · requires add-on</div></div>
+                <div class="toggle on"><div class="toggle-thumb"></div></div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:0.5px solid rgba(255,255,255,0.06);">
+                <div style="width:28px;height:28px;border-radius:7px;background:rgba(74,222,128,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#4ade80"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>
+                <div style="flex:1;"><div style="color:rgba(255,255,255,0.88);font-size:14px;">PPE violation</div><div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:1px;">Safety · Edge AI</div></div>
+                <div class="toggle off"><div class="toggle-thumb"></div></div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;">
+                <div style="width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="rgba(255,255,255,0.55)"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg></div>
+                <div style="flex:1;"><div style="color:rgba(255,255,255,0.88);font-size:14px;">Camera offline</div><div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:1px;">System health</div></div>
+                <div class="toggle on"><div class="toggle-thumb"></div></div>
+              </div>
+            </div>
+            <div style="padding:14px 20px 6px;color:rgba(255,255,255,0.3);font-size:11px;text-transform:uppercase;letter-spacing:0.7px;">Minimum severity</div>
+            <div style="margin:0 12px;background:rgba(255,255,255,0.04);border-radius:12px;overflow:hidden;">
+              <div style="padding:14px;">
+                <div style="display:flex;gap:8px;width:100%;margin-bottom:8px;">
+                  <div style="flex:1;background:rgba(239,68,68,0.18);border:1.5px solid #ef4444;border-radius:8px;padding:8px;text-align:center;"><div style="color:#f87171;font-size:11px;font-weight:500;">Critical</div></div>
+                  <div style="flex:1;background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.1);border-radius:8px;padding:8px;text-align:center;"><div style="color:rgba(255,255,255,0.4);font-size:11px;">Warning</div></div>
+                  <div style="flex:1;background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.1);border-radius:8px;padding:8px;text-align:center;"><div style="color:rgba(255,255,255,0.4);font-size:11px;">All</div></div>
+                </div>
+                <div style="color:rgba(255,255,255,0.35);font-size:12px;">Only notify for critical-severity alerts</div>
+              </div>
+            </div>
+            <div style="padding:14px 20px 6px;color:rgba(255,255,255,0.3);font-size:11px;text-transform:uppercase;letter-spacing:0.7px;">Quiet hours</div>
+            <div style="margin:0 12px;background:rgba(255,255,255,0.04);border-radius:12px;overflow:hidden;">
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:0.5px solid rgba(255,255,255,0.06);"><div style="flex:1;color:rgba(255,255,255,0.88);font-size:14px;">Enable quiet hours</div><div class="toggle on"><div class="toggle-thumb"></div></div></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:0.5px solid rgba(255,255,255,0.06);"><div style="flex:1;color:rgba(255,255,255,0.88);font-size:14px;">From</div><span style="color:#60a5fa;font-size:14px;">10:00 PM</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:0.5px solid rgba(255,255,255,0.06);"><div style="flex:1;color:rgba(255,255,255,0.88);font-size:14px;">To</div><span style="color:#60a5fa;font-size:14px;">6:00 AM</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;"><div style="flex:1;"><div style="color:rgba(255,255,255,0.88);font-size:14px;">Override for Critical</div><div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:1px;">Still alert during quiet hours</div></div><div class="toggle on"><div class="toggle-thumb"></div></div></div>
+            </div>
+          </div>
+          <div class="bottom-nav">
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div><span class="nav-lbl">Views</span></div>
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg></div><span class="nav-lbl">Cameras</span></div>
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div><span class="nav-lbl">Alarms</span></div>
+            <div class="nav-item"><div class="nav-icon active"><svg width="20" height="20" viewBox="0 0 24 24" fill="#60a5fa"><circle cx="12" cy="6" r="2"/><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></div><span class="nav-lbl active">More</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-panel">
+        <div class="spec-label">Screen 08</div>
+        <div class="spec-title">Notification preferences — drill-down</div>
+        <div class="spec-body">Granular per-alert-type notification control. Edge AI alert types are labelled "requires add-on" to reflect the add-on-aware design principle from the MRD.</div>
+        <ul class="spec-list">
+          <li>Per-type toggles: Person / Vehicle / Intrusion / PPE / Basic motion / Camera offline</li>
+          <li>Edge AI alert types clearly labelled "requires add-on"</li>
+          <li>Minimum severity selector: Critical / Warning / All (segmented control)</li>
+          <li>Quiet hours: enable toggle, From/To time pickers, Critical override</li>
+          <li>"Override for Critical" ensures life-safety events still push during quiet hours</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="section-divider" id="password">
+
+<!-- ══════════════════════════════════════════
+     SECTION 5 — CHANGE PASSWORD
+══════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-number">05 / Change Password</div>
+      <h2 class="section-title">Security — Change Password</h2>
+      <p class="section-desc">In-app password change flow for operators not using SSO. Accessed from the Password row in the Security section.</p>
+    </div>
+    <span class="section-tag tag-security">Security</span>
+  </div>
+
+  <div class="screen-row">
+    <div class="screen-card">
+      <div class="phone-frame">
+        <div class="phone">
+          <div class="status-bar"><span>9:41</span><div class="battery"><div class="battery-fill"></div></div></div>
+          <div style="padding:10px 16px 6px;display:flex;align-items:center;gap:10px;flex-shrink:0;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span style="color:white;font-size:17px;font-weight:500;">Change password</span></div>
+          <div style="flex:1;overflow-y:auto;">
+            <div style="padding:16px 20px 6px;color:rgba(255,255,255,0.3);font-size:11px;text-transform:uppercase;letter-spacing:0.7px;">Current password</div>
+            <div style="margin:0 12px;background:rgba(255,255,255,0.04);border-radius:12px;overflow:hidden;">
+              <div style="padding:12px 14px;"><div style="color:rgba(255,255,255,0.4);font-size:11px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Current password</div><div style="color:rgba(255,255,255,0.7);font-size:14px;letter-spacing:3px;">••••••••</div></div>
+            </div>
+            <div style="padding:14px 20px 6px;color:rgba(255,255,255,0.3);font-size:11px;text-transform:uppercase;letter-spacing:0.7px;">New password</div>
+            <div style="margin:0 12px;background:rgba(255,255,255,0.04);border-radius:12px;overflow:hidden;">
+              <div style="padding:12px 14px;border-bottom:0.5px solid rgba(255,255,255,0.06);"><div style="color:rgba(255,255,255,0.4);font-size:11px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">New password</div><div style="color:rgba(255,255,255,0.7);font-size:14px;letter-spacing:3px;">••••••••••<span style="display:inline-block;width:1.5px;height:14px;background:#60a5fa;vertical-align:middle;margin-left:1px;"></span></div></div>
+              <div style="padding:12px 14px;"><div style="color:rgba(255,255,255,0.4);font-size:11px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Confirm new password</div><div style="color:rgba(255,255,255,0.25);font-size:14px;">Enter again to confirm</div></div>
+            </div>
+            <div style="padding:14px 20px 4px;">
+              <div style="color:rgba(255,255,255,0.3);font-size:11px;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:8px;">Requirements</div>
+              <div style="display:flex;align-items:center;gap:8px;padding:5px 0;"><div style="width:6px;height:6px;border-radius:50%;background:#4ade80;flex-shrink:0;"></div><span style="font-size:12px;color:#4ade80;">At least 8 characters</span></div>
+              <div style="display:flex;align-items:center;gap:8px;padding:5px 0;"><div style="width:6px;height:6px;border-radius:50%;background:#4ade80;flex-shrink:0;"></div><span style="font-size:12px;color:#4ade80;">Uppercase &amp; lowercase letters</span></div>
+              <div style="display:flex;align-items:center;gap:8px;padding:5px 0;"><div style="width:6px;height:6px;border-radius:50%;background:#4ade80;flex-shrink:0;"></div><span style="font-size:12px;color:#4ade80;">At least one number</span></div>
+              <div style="display:flex;align-items:center;gap:8px;padding:5px 0;"><div style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.2);flex-shrink:0;"></div><span style="font-size:12px;color:rgba(255,255,255,0.35);">At least one special character</span></div>
+            </div>
+            <div style="margin:16px 12px 0;background:rgba(37,99,235,0.25);border-radius:10px;padding:13px;text-align:center;color:rgba(255,255,255,0.3);font-size:15px;font-weight:500;">Update password</div>
+            <div style="padding:16px 20px 4px;text-align:center;"><span style="color:#60a5fa;font-size:13px;">Forgot current password?</span><div style="color:rgba(255,255,255,0.3);font-size:12px;margin-top:4px;">A reset link will be sent to your email</div></div>
+          </div>
+          <div class="bottom-nav">
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div><span class="nav-lbl">Views</span></div>
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg></div><span class="nav-lbl">Cameras</span></div>
+            <div class="nav-item"><div class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.45)"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div><span class="nav-lbl">Alarms</span></div>
+            <div class="nav-item"><div class="nav-icon active"><svg width="20" height="20" viewBox="0 0 24 24" fill="#60a5fa"><circle cx="12" cy="6" r="2"/><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></div><span class="nav-lbl active">More</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="spec-panel">
+        <div class="spec-label">Screen 09</div>
+        <div class="spec-title">Change password — drill-down</div>
+        <div class="spec-body">In-app password change form for non-SSO accounts. The submit button remains disabled until all password rules pass, preventing invalid submissions.</div>
+        <ul class="spec-list">
+          <li>Three fields: current password, new password (active), confirm new password</li>
+          <li>Blinking cursor on the active field indicates keyboard focus state</li>
+          <li>Real-time password rule checklist: green dot = passed, grey dot = not yet met</li>
+          <li>"Update password" button is greyed out until all four rules are satisfied</li>
+          <li>"Forgot current password?" link sends a reset email — no in-app reset flow</li>
+          <li>Entry point: Password row in the Security section of Profile</li>
+          <li>For SSO-managed accounts, the Password row should link to the operator portal instead</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
+<footer class="site-footer">
+  <div class="footer-left"><strong>TotalMedia Aware</strong> — Mobile App Wireframes &nbsp;·&nbsp; Product Design v0.1 draft &nbsp;·&nbsp; For internal development reference only</div>
+  <div class="footer-right">Generated Apr 2026</div>
+</footer>
+
+<script>
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const el = document.querySelector(a.getAttribute('href'));
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+  const pills = document.querySelectorAll('.nav-pill');
+  const sections = ['views','alarms','liveview','profile','notifications','password'];
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 180) current = id;
+    });
+    pills.forEach(p => {
+      p.classList.toggle('active', p.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+</body>
+</html>
